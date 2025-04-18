@@ -1,12 +1,21 @@
 {
   "name": "taskger",
   "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "description": "CLI 기반 할 일 관리자",
+  "main": "taskger.js",
+  "bin": {
+    "taskger": "./taskger.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": ""
+  "scripts": {
+    "start": "node taskger.js"
+  },
+  "keywords": [
+    "cli",
+    "task",
+    "todo",
+    "csv",
+    "node"
+  ],
+  "author": "너의 이름 또는 깃허브 아이디",
+  "license": "MIT"
 }
