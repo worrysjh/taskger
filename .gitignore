@@ -1,0 +1,5 @@
+node_modules/
+tasks.csv
+.vscode/
+*.log
+.DS_Store
