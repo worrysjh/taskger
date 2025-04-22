@@ -23,7 +23,7 @@ async function run() {
           describe: "추가할 일 내용",
           demandOption: true,
           type: "string",
-          alias: "t",
+          alias: "n",
         },
       },
       handler: (argv) => addHandler(argv, tasks, writeTasks),
@@ -37,11 +37,11 @@ async function run() {
       command: "done",
       describe: "할 일의 상태를 완료로 변경합니다.",
       builder: {
-        taskNum: {
+        indexNum: {
           describe: "완료 처리할 일의 번호",
           demandOption: true,
           type: "number",
-          alias: "t",
+          alias: "i",
         },
       },
       handler: (argv) => doneHandler(argv, tasks, writeTasks),
@@ -62,6 +62,8 @@ async function run() {
     .demandCommand(1, "❗ 명령어를 입력하세요.")
     .strict() // 잘못된 옵션을 막음
     .help()
+    .wrap(null)
+    .epilog("📌 단축 옵션 안내: -n (add), -i (done), -d (delete)")
     .argv; // 모든 명령어 파싱과 실행이 이루어짐짐
 }
 

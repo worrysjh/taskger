@@ -1,5 +1,5 @@
 module.exports = async function doneHandler(argv, tasks, writeTasks) {
-  const index = argv.taskNum;
+  const index = argv.indexNum;
   if (tasks[index]) {
     if (tasks[index].done) console.log("이미 완료 처리된 작업입니다.");
     else {
