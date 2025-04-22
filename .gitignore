@@ -3,3 +3,4 @@ tasks.csv
 .vscode/
 *.log
 .DS_Store
+output/
