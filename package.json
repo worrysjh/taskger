@@ -19,6 +19,7 @@
   "author": "worrysjh@gmail.com",
   "license": "MIT",
   "dependencies": {
+    "commander": "^13.1.0",
     "yargs": "^17.7.2"
   }
 }

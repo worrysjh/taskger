@@ -1,70 +1,49 @@
 #!/usr/bin/env node
 
 const { readTasks, writeTasks } = require("./utils/file");
-const yargs = require("yargs");
+const { Command } = require("commander");
+const program = new Command();
 
 const addHandler = require("./commands/add");
 const listHandler = require("./commands/list");
 const doneHandler = require("./commands/done");
 const deleteHandler = require("./commands/delete");
 
-async function run() {
-  const tasks = await readTasks();
+program.name("taskger").description("CLI Task Manager").version("1.0.0");
 
-  yargs
-    .parserConfiguration({
-      "camel-case-expansion": true,
-    })
-    .command({
-      command: "add",
-      describe: "새로운 할 일을 추가합니다.",
-      builder: {
-        newTask: {
-          describe: "추가할 일 내용",
-          demandOption: true,
-          type: "string",
-          alias: "n",
-        },
-      },
-      handler: (argv) => addHandler(argv, tasks, writeTasks),
-    })
-    .command({
-      command: "list",
-      describe: "전체 할 일 목록을 조회합니다.",
-      handler: () => listHandler(tasks),
-    })
-    .command({
-      command: "done",
-      describe: "할 일의 상태를 완료로 변경합니다.",
-      builder: {
-        indexNum: {
-          describe: "완료 처리할 일의 번호",
-          demandOption: true,
-          type: "number",
-          alias: "i",
-        },
-      },
-      handler: (argv) => doneHandler(argv, tasks, writeTasks),
-    })
-    .command({
-      command: "delete",
-      describe: "할 일을 목록에서 삭제합니다.",
-      builder: {
-        delNum: {
-          describe: "삭제 처리할 일의 번호",
-          demandOption: true,
-          type: "number",
-          alias: "d",
-        },
-      },
-      handler: (argv) => deleteHandler(argv, tasks, writeTasks),
-    })
-    .demandCommand(1, "❗ 명령어를 입력하세요.")
-    .strict() // 잘못된 옵션을 막음
-    .help()
-    .wrap(null)
-    .epilog("📌 단축 옵션 안내: -n (add), -i (done), -d (delete)")
-    .argv; // 모든 명령어 파싱과 실행이 이루어짐짐
-}
+program
+  .command("add")
+  .description("할 일을 추가합니다.")
+  .requiredOption("-n, --new-task <task>", "추가할 할 일 내용")
+  .action(async (opts) => {
+    const tasks = await readTasks();
+    addHandler({ newTask: opts.newTask }, tasks, writeTasks);
+  });
 
-run();
+program
+  .command("list")
+  .description("전체 할 일 목록을 조회합니다.")
+  .action(async () => {
+    const tasks = await readTasks();
+    listHandler(tasks);
+  });
+
+program
+  .command("done")
+  .description("할 일을 완료 처리합니다.")
+  .requiredOption("-i, --index-num <index>", "완료 처리할 할 일 번호")
+  .action(async (opts) => {
+    const tasks = await readTasks();
+    doneHandler({ indexNum: parseInt(opts.indexNum) }, tasks, writeTasks);
+  });
+
+program
+  .command("delete")
+  .description("할 일을 삭제합니다.")
+  .requiredOption("-d, --del-num <index>", "삭제할 할 일 번호")
+  .action(async (opts) => {
+    const tasks = await readTasks();
+    deleteHandler({ delNum: parseInt(opts.delNum) }, tasks, writeTasks);
+  });
+
+program.parse();
