@@ -8,7 +8,7 @@ async function run() {
 
   yargs
     .parserConfiguration({
-      "camel-case-expansion": true
+      "camel-case-expansion": true,
     })
     .command({
       command: "add",
@@ -18,24 +18,24 @@ async function run() {
           describe: "추가할 일 내용",
           demandOption: true,
           type: "string",
-          alias: "a"
-        }
+          alias: "a",
+        },
       },
-      async handler(argv){
-        tasks.push({task: argv.newTask, done: false});
+      async handler(argv) {
+        tasks.push({ task: argv.newTask, done: false });
         await writeTasks(tasks);
         console.log(`✅ 추가됨: "${argv.newTask}"`);
-      }
+      },
     })
     .command({
       command: "list",
       describe: "전체 할 일 목록을 조회합니다.",
-      handler(){
-        tasks.forEach((t, i)=>{
+      handler() {
+        tasks.forEach((t, i) => {
           const status = t.done ? "☑" : "⬜";
-        console.log(`${i}: ${status} ${t.task}`);
-        })
-      }
+          console.log(`${i}: ${status} ${t.task}`);
+        });
+      },
     })
     .command({
       command: "done",
@@ -45,23 +45,22 @@ async function run() {
           describe: "완료 처리할 일의 번호",
           demandOption: true,
           type: "number",
-          alias: "t"
-        }
+          alias: "t",
+        },
       },
-      async handler(argv){
+      async handler(argv) {
         const index = argv.taskNum;
-        if(tasks[index]){
-          if(tasks[index].done)
-            console.log("이미 완료 처리된 작업입니다.");
-          else{
+        if (tasks[index]) {
+          if (tasks[index].done) console.log("이미 완료 처리된 작업입니다.");
+          else {
             tasks[index].done = true;
             await writeTasks(tasks);
             console.log(`☑️ 완료 처리: "${tasks[index].task}"`);
           }
-        } else{
+        } else {
           console.log("❗ 존재하지 않는 인덱스입니다.");
         }
-      }
+      },
     })
     .command({
       command: "delete",
@@ -71,19 +70,19 @@ async function run() {
           describe: "삭제 처리할 일의 번호",
           demandOption: true,
           type: "number",
-          alias: "d"
-        }
+          alias: "d",
+        },
       },
-      async handler(argv){
+      async handler(argv) {
         const index = argv.delNum;
-        if(tasks[index]){
+        if (tasks[index]) {
           const [removed] = tasks.splice(index, 1);
           await writeTasks(tasks);
-          console.log(`🗑️ 삭제됨: "${removed.task}"`)
-        } else{
-          console.log("❗ 존재하지 않는 인덱스입니다.")
+          console.log(`🗑️ 삭제됨: "${removed.task}"`);
+        } else {
+          console.log("❗ 존재하지 않는 인덱스입니다.");
         }
-      }
+      },
     })
     .demandCommand(1, "❗ 명령어를 입력하세요.")
     .strict() // 잘못된 옵션을 막음
