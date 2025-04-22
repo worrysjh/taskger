@@ -7,6 +7,9 @@ async function run() {
   const tasks = await readTasks();
 
   yargs
+    .parserConfiguration({
+      "camel-case-expansion": true
+    })
     .command({
       command: "add",
       describe: "새로운 할 일을 추가합니다.",
@@ -14,7 +17,8 @@ async function run() {
         newTask: {
           describe: "추가할 일 내용",
           demandOption: true,
-          type: "string"
+          type: "string",
+          alias: "a"
         }
       },
       async handler(argv){
@@ -40,7 +44,8 @@ async function run() {
         taskNum: {
           describe: "완료 처리할 일의 번호",
           demandOption: true,
-          type: "number"
+          type: "number",
+          alias: "t"
         }
       },
       async handler(argv){
@@ -65,7 +70,8 @@ async function run() {
         delNum: {
           describe: "삭제 처리할 일의 번호",
           demandOption: true,
-          type: "number"
+          type: "number",
+          alias: "d"
         }
       },
       async handler(argv){
@@ -79,7 +85,10 @@ async function run() {
         }
       }
     })
+    .demandCommand(1, "❗ 명령어를 입력하세요.")
+    .strict() // 잘못된 옵션을 막음
     .help()
-    .argv;
+    .argv; // 모든 명령어 파싱과 실행이 이루어짐짐
 }
+
 run();
