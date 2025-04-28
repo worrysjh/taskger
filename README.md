@@ -11,7 +11,7 @@ CSV 파일을 통해 데이터를 로컬에 저장하며, `add`, `list`, `done`,
 - 전체 목록 조회 (`list`)
 - 할 일 완료 처리 (`done`)
 - 할 일 삭제 (`delete`)
-- `commander` 기반 명령어 파싱
+- `yargs` 기반 명령어 파싱
 - CSV 파일 기반 로컬 저장소 관리
 
 ---
@@ -89,7 +89,7 @@ Node.js 복습하기,true
 
 ## 📂 흐름도
 
-![taskger 흐름도](https://github.com/user-attachments/assets/b85bca66-2dcf-4dc2-923e-4746283393d4)
+![taskger 흐름도 yargs](https://github.com/user-attachments/assets/7b9ce54a-decf-45a0-bfb7-5fdccc9bae3c)
 
 
 ---
