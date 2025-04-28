@@ -3,6 +3,9 @@
 **taskger**는 Node.js 기반의 간단하고 강력한 CLI(명령줄) 할 일(Task) 관리 도구입니다.  
 CSV 파일을 통해 데이터를 로컬에 저장하며, `add`, `list`, `done`, `delete` 명령어로 일정을 손쉽게 관리할 수 있습니다.
 
+브렌치 **refactor/taskger-commander** 에는 commander 을 이용하여 작성,
+메인 **main** 에는 yargs를 이용하여 작성하였습니다.
+
 ---
 
 ## 🚀 주요 기능
